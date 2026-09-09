@@ -40,8 +40,9 @@ const { campaign, acts, dragon } = useCampaign()
         The Council of HiQ has sent out a second summons — and this one is not
         for marchers. Ash chokes the long roads; there is no walking to
         Highcrown now. What the realm needs is a company: a handful of heroes
-        who will spend twelve weeks making themselves strong enough to climb the
-        mountain and stand on the Ember Throne.
+        who will spend the last three months of the year making themselves
+        strong enough to climb the mountain and stand on the Ember Throne — on
+        the last night of it, because that is the hour she named.
       </p>
       <p class="text-parchment-200">
         You cannot out-fly a dragon. You cannot out-burn one. You can only
@@ -87,9 +88,9 @@ const { campaign, acts, dragon } = useCampaign()
             {{ boss.name }}<span class="text-parchment-400">, {{ boss.title }}</span>
           </h3>
           <p class="text-xs text-parchment-500">{{ boss.place }}</p>
-          <p class="mt-1.5 font-chronicle text-sm leading-relaxed text-parchment-400">
-            {{ boss.intro }}
-          </p>
+          <div class="mt-1.5 space-y-2 font-chronicle text-sm leading-relaxed text-parchment-400">
+            <p v-for="(para, i) in paragraphs(boss.intro)" :key="i">{{ para }}</p>
+          </div>
         </li>
       </ol>
 
@@ -101,9 +102,9 @@ const { campaign, acts, dragon } = useCampaign()
           {{ dragon.name }}<span class="text-parchment-400">, {{ dragon.title }}</span>
         </h3>
         <p class="text-xs text-parchment-500">{{ dragon.place }}</p>
-        <p class="mt-1.5 font-chronicle text-sm leading-relaxed text-parchment-400">
-          {{ dragon.intro }}
-        </p>
+        <div class="mt-1.5 space-y-2 font-chronicle text-sm leading-relaxed text-parchment-400">
+          <p v-for="(para, i) in paragraphs(dragon.intro)" :key="i">{{ para }}</p>
+        </div>
       </div>
     </section>
 

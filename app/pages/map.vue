@@ -16,8 +16,8 @@ const { campaign, acts, dragon, hasStarted } = useCampaign()
 
     <p v-if="!hasStarted" class="font-chronicle text-parchment-400">
       Five lieutenants stand between the company and the mountain. Each is
-      weighed at the end of its own two weeks; the wyrm is weighed on
-      everything.
+      weighed at the end of its own act; the wyrm is weighed on everything, on
+      the last night of the year.
     </p>
 
     <!-- The five acts, joined by the road. -->

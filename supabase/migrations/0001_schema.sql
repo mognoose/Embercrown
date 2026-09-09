@@ -147,8 +147,8 @@ create table bosses (
   name              text not null,
   title             text not null,
   place             text not null,
-  -- Minibosses are judged on the deeds of their own two-week act; the dragon is
-  -- judged on the whole campaign. window_starts_on says which.
+  -- Minibosses are judged on the deeds of their own act; the dragon is judged
+  -- on the whole campaign. window_starts_on says which.
   window_starts_on  date not null,
   encounter_on      date not null,
   tested_abilities  text[] not null check (array_length(tested_abilities, 1) between 1 and 6),

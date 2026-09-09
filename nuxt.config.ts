@@ -12,7 +12,10 @@ export default defineNuxtConfig({
       htmlAttrs: { lang: 'en' },
       title: 'Embercrown',
       meta: [
-        { name: 'description', content: 'The Waking of the Ashen Wyrm — a twelve-week campaign.' },
+        {
+          name: 'description',
+          content: 'The Waking of the Ashen Wyrm — a HiQ campaign, 1 October to New Year\'s Eve.',
+        },
         { name: 'theme-color', content: '#0d0b0a' },
       ],
       link: [{ rel: 'icon', href: '/favicon.ico' }],

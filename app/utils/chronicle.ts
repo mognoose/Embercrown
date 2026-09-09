@@ -56,3 +56,12 @@ export function chronicleLine(deed: DeedPoint): string {
 export function chronicleGain(deed: DeedPoint): string {
   return `+${Math.round(Number(deed.points))} ${ABILITIES[deed.ability_code].name}`
 }
+
+/**
+ * Every narrative field on a boss separates paragraphs with a blank line.
+ * Splitting here keeps the four of them rendering the same way.
+ */
+export function paragraphs(text: string | null | undefined): string[] {
+  if (!text) return []
+  return text.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean)
+}

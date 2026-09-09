@@ -17,11 +17,11 @@ const underway = computed(
   () => !!boss.value && today.value >= boss.value.window_starts_on && !resolved.value,
 )
 
-/** Victory and defeat texts hold paragraph breaks; render them as paragraphs. */
 const account = computed(() => {
   if (!boss.value || !resolved.value) return []
-  const text = outcome.value === 'victory' ? boss.value.victory_text : boss.value.defeat_text
-  return text.split('\n\n').filter(Boolean)
+  return paragraphs(
+    outcome.value === 'victory' ? boss.value.victory_text : boss.value.defeat_text,
+  )
 })
 
 const burdenList = computed(() =>
@@ -80,7 +80,7 @@ const burdenList = computed(() =>
     </p>
 
     <section class="mt-6 space-y-4 font-chronicle leading-relaxed text-parchment-300">
-      <p>{{ boss.intro }}</p>
+      <p v-for="(para, i) in paragraphs(boss.intro)" :key="i">{{ para }}</p>
     </section>
 
     <!-- How the fight stands. -->
@@ -141,9 +141,9 @@ const burdenList = computed(() =>
     <!-- Before: what to train. After: what happened. -->
     <section v-if="!resolved" class="mt-7">
       <h2 class="rune">The Council's dispatch</h2>
-      <p class="mt-2 font-chronicle leading-relaxed text-parchment-300">
-        {{ boss.approach_text }}
-      </p>
+      <div class="mt-2 space-y-4 font-chronicle leading-relaxed text-parchment-300">
+        <p v-for="(para, i) in paragraphs(boss.approach_text)" :key="i">{{ para }}</p>
+      </div>
       <NuxtLink
         to="/log"
         class="mt-5 inline-block rounded bg-ember-600 px-5 py-3 font-display tracking-wide text-parchment-100 transition hover:bg-ember-500"

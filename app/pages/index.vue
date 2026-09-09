@@ -137,9 +137,9 @@ const heroWeakest = computed(() => {
       </div>
 
       <UiPanel v-if="currentAct" title="The Council's dispatch" tone="ember">
-        <p class="font-chronicle leading-relaxed text-parchment-300">
-          {{ currentAct.approach_text }}
-        </p>
+        <div class="space-y-3 font-chronicle leading-relaxed text-parchment-300">
+          <p v-for="(para, i) in paragraphs(currentAct.approach_text)" :key="i">{{ para }}</p>
+        </div>
         <NuxtLink
           :to="`/encounter/${currentAct.id}`"
           class="mt-3 inline-block text-sm text-ember-300"

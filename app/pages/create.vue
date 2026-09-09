@@ -77,9 +77,9 @@ async function forge() {
     <p class="rune">Before the road</p>
     <h1 class="mt-1 text-3xl">Who is going?</h1>
     <p class="mt-3 font-chronicle text-parchment-400">
-      Twelve weeks, five lieutenants and a wyrm. Your class decides what comes
-      easiest to you — and a company of six of the same thing does not get up
-      that mountain.
+      From the first of October to the last night of the year: five lieutenants
+      and a wyrm. Your class decides what comes easiest to you — and a company
+      of six of the same thing does not get up that mountain.
     </p>
 
     <form class="mt-7 space-y-6" @submit.prevent="forge">

@@ -1,13 +1,14 @@
 # Embercrown
 
-*The Waking of the Ashen Wyrm* — a twelve-week gamified exercise log for a HiQ
-team challenge, and a sequel to the March to Highcrown.
+*The Waking of the Ashen Wyrm* — a gamified exercise log for a HiQ team
+challenge, running **1 October to New Year's Eve**, and a sequel to the March to
+Highcrown.
 
 Everyone who joins makes a D&D-style character. Every workout you log feeds one
 of the six ability scores. Five lieutenants stand between the company and the
-mountain, each weighed at the end of its own two weeks, and at week twelve the
-whole party is measured against a dragon who tests **all six** — so a company of
-nothing but runners does not get up there.
+mountain, each weighed at the end of its own act, and at midnight on 31 December
+the whole party is measured against a dragon who tests **all six** — so a
+company of nothing but runners does not get up there.
 
 Nuxt 4 · Tailwind 4 · Supabase.
 
@@ -78,18 +79,36 @@ the hosted project. `npx supabase stop` when you're done.
 
 ## Running your own campaign
 
-The shipped campaign runs **Monday 14 September 2026 → Sunday 6 December 2026**,
-with encounters on the Sundays that close weeks 2, 4, 6, 8, 10 and 12. Deeds
-dated before the start date are rejected by the database, so set these to your
-own dates before inviting anyone.
+The shipped campaign runs **Thursday 1 October 2026 → Thursday 31 December
+2026** — 92 days. Every miniboss falls on a Sunday, so an act closes as the week
+closes; the wyrm falls on New Year's Eve.
+
+| Act | Encounter | Window | Days | Tests |
+| --- | --- | --- | --- | --- |
+| I · Grimjaw | **Sun 18 Oct** | 1 Oct → 18 Oct | 18 | STR · CON |
+| II · The Whisperer | **Sun 1 Nov** | 19 Oct → 1 Nov | 14 | INT · WIS |
+| III · Kaerith | **Sun 15 Nov** | 2 Nov → 15 Nov | 14 | CON · DEX |
+| IV · Vex Coinshade | **Sun 29 Nov** | 16 Nov → 29 Nov | 14 | DEX · CHA |
+| V · The Echo Warden | **Sun 13 Dec** | 30 Nov → 13 Dec | 14 | CHA · WIS |
+| Finale · Vharaxis | **Thu 31 Dec** | 1 Oct → 31 Dec | 92 | all six |
+
+Two irregularities, both deliberate. **Act I is 18 days** because the campaign
+opens on a Thursday and the first act is the one where people are still making
+characters and working out what counts. **The 18 days after Act V are the
+climb** — no lieutenant left, only the mountain, over the holidays, scored on
+the whole campaign, which is the right shape when half the company is
+travelling.
+
+Deeds dated before the start date are rejected by the database, so set these to
+your own dates before inviting anyone.
 
 Everything the players see comes out of two tables, so you can retune the game
 without touching the app:
 
 - **Dates** — `campaign.starts_on` / `ends_on`, and each boss's
   `window_starts_on` / `encounter_on`. Minibosses are scored on the deeds inside
-  their own two-week window; the dragon's window is the whole campaign.
-- **Difficulty** — `bosses.required_per_hero`, e.g. `{"str": 75, "con": 75}`.
+  their own window; the dragon's window is the whole campaign.
+- **Difficulty** — `bosses.required_per_hero`, e.g. `{"str": 85, "con": 85}`.
   These are points required *per active hero*, where an active hero is one who
   logged at least one deed inside that boss's window. Thresholds therefore scale
   with turnout: a party of eight and a party of forty get the same fight, and
@@ -102,12 +121,16 @@ without touching the app:
 
 ### The balance, in one paragraph
 
-A moderately active participant logs roughly 150 minutes a week, which is
-150–200 points spread across abilities. Over a two-week act that's 300–400
-points per hero to distribute, so a miniboss asking 75–100 in each of two
-abilities wants about half the party's effort pointed at it. The dragon asks 220
-in all six across the whole twelve weeks, which nobody reaches by accident on
-Intelligence, Wisdom or Charisma. That is deliberately the hard part.
+Because thresholds scale per active hero, the question a number really asks is
+not "how hard must someone train" but **"what share of the company has to be
+doing this at all"**. At the dragon's 250 in all six, that share is about a
+third: two twenty-minute meditations a week for the season comes to roughly 830
+Intelligence, so one hero in three covers everyone else. Constitution clears
+itself; Wisdom and Charisma are the ones that need somebody to actually organise
+something, which is the point of them. The minibosses are steeper *inside their
+own fortnight* on purpose — Act II wants something like 60% of the party sitting
+quietly — because each act exists to make everyone try the thing it is about,
+and the Council's dispatch names the two abilities in advance.
 
 **Watch the projection in week one.** Every boss page shows a live "how it
 stands" readout, so you can see a fight is unwinnable long before the party
@@ -119,7 +142,7 @@ rather than a rescue.
 Nothing dead-ends. A miniboss the company fails to stop **escapes to the
 mountain**, and a quarter of what it asked for is added to the dragon's demand —
 on exactly the abilities the company was weak in. The campaign always runs to
-week twelve, and there is always a visible reason to catch up.
+New Year's Eve, and there is always a visible reason to catch up.
 
 ---
 
@@ -158,7 +181,7 @@ table. It is idempotent — the primary key means the first caller wins and
 everyone else reads the same row — and once written, the result never changes,
 whatever anybody logs afterwards.
 
-To test the whole arc without waiting twelve weeks, move a boss's
+To test the whole arc without waiting three months, move a boss's
 `encounter_on` to yesterday, load `/map`, and check that exactly one
 `encounters` row appears with the right outcome. Delete the row and reset the
 date to try the other branch.
