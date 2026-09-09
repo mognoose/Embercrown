@@ -1,14 +1,14 @@
 # Embercrown
 
 *The Waking of the Ashen Wyrm* — a gamified exercise log for a HiQ team
-challenge, running **1 October to New Year's Eve**, and a sequel to the March to
+challenge, running **14 September to 15 December**, and a sequel to the March to
 Highcrown.
 
 Everyone who joins makes a D&D-style character. Every workout you log feeds one
 of the six ability scores. Five lieutenants stand between the company and the
-mountain, each weighed at the end of its own act, and at midnight on 31 December
-the whole party is measured against a dragon who tests **all six** — so a
-company of nothing but runners does not get up there.
+mountain, each weighed at the end of its own act, and on 15 December the whole
+party is measured against a dragon who tests **all six** — so a company of
+nothing but runners does not get up there.
 
 Nuxt 4 · Tailwind 4 · Supabase.
 
@@ -80,25 +80,28 @@ the hosted project. `npx supabase stop` when you're done.
 
 ## Running your own campaign
 
-The shipped campaign runs **Thursday 1 October 2026 → Thursday 31 December
-2026** — 92 days. Every miniboss falls on a Sunday, so an act closes as the week
-closes; the wyrm falls on New Year's Eve.
+The shipped campaign runs **Monday 14 September 2026 → Tuesday 15 December
+2026** — 93 days. Every miniboss falls on a Sunday, so an act closes as the week
+closes.
 
-| Act | Encounter | Window | Days | Tests |
-| --- | --- | --- | --- | --- |
-| I · Grimjaw | **Sun 18 Oct** | 1 Oct → 18 Oct | 18 | STR · CON |
-| II · The Whisperer | **Sun 1 Nov** | 19 Oct → 1 Nov | 14 | INT · WIS |
-| III · Kaerith | **Sun 15 Nov** | 2 Nov → 15 Nov | 14 | CON · DEX |
-| IV · Vex Coinshade | **Sun 29 Nov** | 16 Nov → 29 Nov | 14 | DEX · CHA |
-| V · The Echo Warden | **Sun 13 Dec** | 30 Nov → 13 Dec | 14 | CHA · WIS |
-| Finale · Vharaxis | **Thu 31 Dec** | 1 Oct → 31 Dec | 92 | all six |
+| Act | Encounter | Window | Days | Tests | Per hero |
+| --- | --- | --- | --- | --- | --- |
+| I · Grimjaw | **Sun 4 Oct** | 14 Sep → 4 Oct | 21 | STR · CON | 95 / 95 |
+| II · The Whisperer | **Sun 18 Oct** | 5 Oct → 18 Oct | 14 | INT · WIS | 80 / 80 |
+| III · Kaerith | **Sun 1 Nov** | 19 Oct → 1 Nov | 14 | CON · DEX | 90 / 85 |
+| IV · Vex Coinshade | **Sun 15 Nov** | 2 Nov → 15 Nov | 14 | DEX · CHA | 95 / 90 |
+| V · The Echo Warden | **Sun 29 Nov** | 16 Nov → 29 Nov | 14 | CHA · WIS | 100 / 95 |
+| Finale · Vharaxis | **Tue 15 Dec** | 14 Sep → 15 Dec | 93 | all six | 250 each |
 
-Two irregularities, both deliberate. **Act I is 18 days** because the campaign
-opens on a Thursday and the first act is the one where people are still making
-characters and working out what counts. **The 18 days after Act V are the
-climb** — no lieutenant left, only the mountain, over the holidays, scored on
-the whole campaign, which is the right shape when half the company is
-travelling.
+Two irregularities, both deliberate. **Act I is 21 days**: the campaign opened
+five days after it was announced, so the whole of the first act is people still
+making characters and working out what counts, and nobody who joins in week two
+has already missed a fight. **The 16 days after Act V are the climb** — no
+lieutenant left, only the mountain, scored on the whole campaign.
+
+Because act lengths have to be multiples of a week to keep every encounter on a
+Sunday, the slack has to sit somewhere; putting it in Act I is what keeps the
+final ascent from stretching to 23 days.
 
 Deeds dated before the start date are rejected by the database, so set these to
 your own dates before inviting anyone.
@@ -143,7 +146,7 @@ rather than a rescue.
 Nothing dead-ends. A miniboss the company fails to stop **escapes to the
 mountain**, and a quarter of what it asked for is added to the dragon's demand —
 on exactly the abilities the company was weak in. The campaign always runs to
-New Year's Eve, and there is always a visible reason to catch up.
+the fifteenth of December, and there is always a visible reason to catch up.
 
 ---
 

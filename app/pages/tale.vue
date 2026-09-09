@@ -40,9 +40,9 @@ const { campaign, acts, dragon } = useCampaign()
         The Council of HiQ has sent out a second summons — and this one is not
         for marchers. Ash chokes the long roads; there is no walking to
         Highcrown now. What the realm needs is a company: a handful of heroes
-        who will spend the last three months of the year making themselves
-        strong enough to climb the mountain and stand on the Ember Throne — on
-        the last night of it, because that is the hour she named.
+        who will spend thirteen weeks making themselves strong enough to climb
+        the mountain and stand on the Ember Throne — on the fifteenth of
+        December, before the longest night, because that is the day she named.
       </p>
       <p class="text-parchment-200">
         You cannot out-fly a dragon. You cannot out-burn one. You can only

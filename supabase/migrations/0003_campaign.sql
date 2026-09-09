@@ -1,16 +1,16 @@
--- Embercrown — the campaign: the last three months of the year, five
--- lieutenants and a wyrm. 1 October to New Year's Eve.
+-- Embercrown — the campaign: thirteen weeks, five lieutenants and a wyrm.
+-- 14 September to 15 December 2026.
 --
 -- A sequel to the March to Highcrown. Change the dates here to re-run it; the
 -- rest of the app derives everything from these two tables.
 --
 -- The shape of the season:
---   Act I runs 18 days rather than 14, because the campaign opens on a Thursday
---   and the first act is the one where people are still making characters and
---   working out what counts. Acts II-V are clean fortnights closing on Sundays.
---   After the Echo Warden falls on 13 December there is no lieutenant left —
---   only 18 days of climbing over the holidays, scored on the whole campaign,
---   which is the right shape when half the company is travelling.
+--   Act I runs 21 days rather than 14. The campaign opens five days after it was
+--   announced, so the whole of the first act is people still making characters
+--   and working out what counts — no one who joins in week two has already
+--   missed a fight. Acts II-V are clean fortnights, every one closing on a
+--   Sunday. After the Echo Warden falls on 29 November there is no lieutenant
+--   left, only 16 days of climbing, scored on the whole campaign.
 --
 -- Balance, so the numbers are arguable rather than magic:
 --   required_per_hero is points per *active* hero, where an active hero is one
@@ -32,8 +32,8 @@ insert into campaign (id, title, subtitle, starts_on, ends_on) values (
   true,
   'Embercrown',
   'The Waking of the Ashen Wyrm',
-  date '2026-10-01',
-  date '2026-12-31'
+  date '2026-09-14',
+  date '2026-12-15'
 );
 
 insert into bosses (
@@ -46,8 +46,8 @@ insert into bosses (
 -- ── Act I ──────────────────────────────────────────────────────────────────
 (
   'grimjaw', 1, 'Grimjaw', 'the Hollow Knight', 'The Rusted Gate, north of Riverwatch',
-  date '2026-10-01', date '2026-10-18',
-  array['str', 'con'], '{"str": 85, "con": 85}'::jsonb, false,
+  date '2026-09-14', date '2026-10-04',
+  array['str', 'con'], '{"str": 95, "con": 95}'::jsonb, false,
   'game-icons:visored-helm',
 
   'The north gate of Riverwatch has not opened since the night the wyrm woke. '
@@ -81,7 +81,7 @@ insert into bosses (
 -- ── Act II ─────────────────────────────────────────────────────────────────
 (
   'whisperer', 2, 'The Whisperer', 'in the Fen', 'The Hollow Wood',
-  date '2026-10-19', date '2026-11-01',
+  date '2026-10-05', date '2026-10-18',
   array['int', 'wis'], '{"int": 80, "wis": 80}'::jsonb, false,
   'game-icons:goblin-head',
 
@@ -114,7 +114,7 @@ insert into bosses (
 -- ── Act III ────────────────────────────────────────────────────────────────
 (
   'kaerith', 3, 'Kaerith', 'the Drowned Serpent', 'Thunderfalls Deep',
-  date '2026-11-02', date '2026-11-15',
+  date '2026-10-19', date '2026-11-01',
   array['con', 'dex'], '{"con": 90, "dex": 85}'::jsonb, false,
   'game-icons:sea-serpent',
 
@@ -147,7 +147,7 @@ insert into bosses (
 -- ── Act IV ─────────────────────────────────────────────────────────────────
 (
   'coinshade', 4, 'Vex Coinshade', 'the Tallyman', 'The Undermarket of Silverhold',
-  date '2026-11-16', date '2026-11-29',
+  date '2026-11-02', date '2026-11-15',
   array['dex', 'cha'], '{"dex": 95, "cha": 90}'::jsonb, false,
   'game-icons:hooded-figure',
 
@@ -183,7 +183,7 @@ insert into bosses (
 (
   'echo-warden', 5, 'The Echo Warden', 'Doubt, Wearing Your Face',
   'The Bridge of Echoes',
-  date '2026-11-30', date '2026-12-13',
+  date '2026-11-16', date '2026-11-29',
   array['cha', 'wis'], '{"cha": 100, "wis": 95}'::jsonb, false,
   'game-icons:mirror-mirror',
 
@@ -218,7 +218,7 @@ insert into bosses (
 -- ── Finale ─────────────────────────────────────────────────────────────────
 (
   'vharaxis', 6, 'Vharaxis', 'the Ashen', 'The Ember Throne, above Highcrown',
-  date '2026-10-01', date '2026-12-31',
+  date '2026-09-14', date '2026-12-15',
   array['str', 'dex', 'con', 'int', 'wis', 'cha'],
   '{"str": 250, "dex": 250, "con": 250, "int": 250, "wis": 250, "cha": 250}'::jsonb,
   true, 'game-icons:dragon-head',
@@ -230,20 +230,21 @@ insert into bosses (
   'of a hoard beneath the world, while she slept — and every year since, every '
   'step anybody walked toward Highcrown, has been fed to a light that was hers. '
   'She has come for the interest.' || E'\n\n' || ''
-  'She has also named the hour, because a wyrm that old thinks in years and '
-  'likes a clean ledger. She will be met on the last night of this one, or the '
-  'Flame goes into the next as hers, and every year after that.',
+  'She has also named the day, because a wyrm that old thinks in seasons and '
+  'likes a clean ledger. She will be met on the fifteenth of December, before '
+  'the longest night — or she carries the ember down into the dark with her, '
+  'and the Flame does not come out the other side.',
 
   'You cannot out-fly a wyrm and you cannot out-burn one. She has already beaten '
   'stronger companies than this, and quicker ones, and she has centuries of '
   'practice at finding the one thing a party never trained. The only way onto '
   'that summit is to arrive complete — strong, quick, tireless, clear-headed, '
   'steady, and together — and be, in all six, something she did not expect.' || E'\n\n' || ''
-  'When the Echo Warden goes off the bridge on the thirteenth of December there '
-  'is nothing left between the company and the mountain: no lieutenant, no '
-  'trial, only eighteen days of climbing in the dark half of the year, with the '
-  'roads bad and the light gone by four. Everything logged since the first of '
-  'October is on the sledge behind you. Nothing else is.',
+  'When the Echo Warden goes off the bridge on the twenty-ninth of November '
+  'there is nothing left between the company and the mountain: no lieutenant, '
+  'no trial, only sixteen days of climbing into the shortening afternoons, with '
+  'the roads bad and the light gone by four. Everything logged since the '
+  'fourteenth of September is on the sledge behind you. Nothing else is.',
 
   'She takes the company apart looking for the seam. She is very good at it, and '
   'she has all the time in the world, and there is no seam. Strength where she '
@@ -255,12 +256,12 @@ insert into bosses (
   'never in the Flame either. It has been in the people walking toward it the '
   'entire time, which is why it kept burning while she slept, and why there was '
   'always more of it than she remembered leaving.' || E'\n\n' || ''
-  'She goes up. The ash stops. Somewhere below, in the dark, the bells of '
-  'Highcrown start — because it is midnight, and it has been midnight for about '
-  'four seconds, and the people ringing them have no idea yet why the sky came '
-  'back. In the Great Hall the Eternal Flame stands up straight for the first '
-  'time in a year, and the first light of the new one falls on a mountain with '
-  'nothing on it.' || E'\n\n' || ''
+  'She goes up. The ash stops. The sun comes over the shoulder of the mountain '
+  'with nothing standing in front of it for the first time in a year, and it is '
+  'a thin, low, fifteenth-of-December sun, and it is enough.' || E'\n\n' || ''
+  'In the Great Hall the Eternal Flame stands up straight. The longest night is '
+  'still ahead of the realm — but it will be got through now, the way it always '
+  'was: by people going out into the cold and coming back.' || E'\n\n' || ''
   'The Council will want to give the company something. The company, on the '
   'whole, would like to sit down.' || E'\n\n' || ''
   'The Embercrown is held.',
@@ -272,11 +273,11 @@ insert into bosses (
   'holds the Ember Throne for a long time — longer than she expected, long '
   'enough that she has to work — and then the gap tells, the way a gap always '
   'tells, and Vharaxis takes the ember back out of the mountain and goes north '
-  'with it.' || E'\n\n' || ''
-  'The Flame at Highcrown does not go out. Midnight comes, and the bells go, and '
-  'down in the Great Hall it gutters and holds and burns low — because a fire '
-  'like that runs on people moving together, and this year the realm moved. Not '
-  'enough. But it moved.' || E'\n\n' || ''
+  'with it, into the shortest days of the year.' || E'\n\n' || ''
+  'The Flame at Highcrown does not go out. It gutters, and holds, and burns low '
+  'all through midwinter — because a fire like that runs on people moving '
+  'together, and this year the realm moved. Not enough. But it moved, and the '
+  'nights start getting shorter again on their own.' || E'\n\n' || ''
   'The Council is already drafting next year''s summons. The road north is still '
   'there, and so is the company, and everyone now knows exactly which of the six '
   'she went for.' || E'\n\n' || ''

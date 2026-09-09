@@ -14,7 +14,7 @@ export default defineNuxtConfig({
       meta: [
         {
           name: 'description',
-          content: 'The Waking of the Ashen Wyrm — a HiQ campaign, 1 October to New Year\'s Eve.',
+          content: 'The Waking of the Ashen Wyrm — a HiQ campaign, 14 September to 15 December.',
         },
         { name: 'theme-color', content: '#0d0b0a' },
       ],
