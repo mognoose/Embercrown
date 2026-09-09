@@ -69,7 +69,7 @@ Auth + Studio stack on your own machine (needs Docker running):
 
 ```bash
 npx supabase start          # prints a local URL and anon key
-npx supabase db reset       # applies all three migrations from scratch
+npx supabase db reset       # applies all four migrations from scratch
 ```
 
 Point `.env` at the printed `API_URL` and `ANON_KEY` and `npm run dev`. This is
@@ -239,6 +239,22 @@ Then tell them their new six digits, and tell them to change nothing else.
 Vercel or Netlify, both zero-config for Nuxt SSR. Set `SUPABASE_URL` and
 `SUPABASE_KEY` as environment variables. Do not add the service role key —
 nothing in this app wants it.
+
+---
+
+## Regenerating the icon
+
+`public/favicon.svg` is the source of truth — the same `game-icons:flame`
+glyph the app header uses, in ember on an ash tile. The raster versions derive
+from it (needs `librsvg` and `imagemagick`):
+
+```bash
+rsvg-convert -w 256 -h 256 public/favicon.svg -o /tmp/f.png
+magick /tmp/f.png -define icon:auto-resize=48,32,16 public/favicon.ico
+```
+
+`apple-touch-icon.png` is deliberately full-bleed with the flame set further
+in, because iOS applies its own rounded mask on top.
 
 ---
 

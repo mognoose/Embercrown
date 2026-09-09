@@ -18,7 +18,13 @@ export default defineNuxtConfig({
         },
         { name: 'theme-color', content: '#0d0b0a' },
       ],
-      link: [{ rel: 'icon', href: '/favicon.ico' }],
+      link: [
+        // SVG first for anything modern; the .ico is the fallback older
+        // browsers ask for at the root anyway.
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico', sizes: '48x48' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png', sizes: '180x180' },
+      ],
     },
   },
   supabase: {
