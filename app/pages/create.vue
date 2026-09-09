@@ -59,6 +59,7 @@ async function forge() {
           : insertError.message,
       )
     }
+    useHasHero().value = true
     await refreshHero()
     await navigateTo('/')
   }

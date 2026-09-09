@@ -10,19 +10,24 @@ export function useHero() {
   const supabase = useSupabaseClient()
   const user = useSupabaseUser()
 
+  // Watch the id rather than the user object: the object identity changes on
+  // every token refresh, and during hydration it can be present before it is
+  // populated. The id is the only part this query cares about.
+  const uid = computed(() => user.value?.id ?? null)
+
   const { data, pending, refresh } = useAsyncData(
     'my-hero',
     async () => {
-      if (!user.value) return null
+      if (!uid.value) return null
       const { data, error } = await supabase
         .from('hero_summary')
         .select('*')
-        .eq('id', user.value.id)
+        .eq('id', uid.value)
         .maybeSingle()
       if (error) throw error
       return (data ?? null) as unknown as HeroSummary | null
     },
-    { watch: [user] },
+    { watch: [uid] },
   )
 
   return { hero: data, pending, refresh }

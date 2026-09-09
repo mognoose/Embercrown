@@ -9,7 +9,7 @@ import { INTENSITY_MULTIPLIER } from '~/types/domain'
 const emit = defineEmits<{ logged: [] }>()
 
 const { hero } = useHero()
-const { byAbility, all } = useActivityTypes()
+const { all } = useActivityTypes()
 const { log } = useDeedLog()
 const { campaign } = useCampaign()
 const today = useToday()

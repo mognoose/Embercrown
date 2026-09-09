@@ -60,9 +60,28 @@ anon key is the only key the app ever needs — see *Security* below.
 npm run dev
 ```
 
+### Or run the whole thing locally
+
+`supabase/config.toml` is committed, so you can bring up a throwaway Postgres +
+Auth + Studio stack on your own machine (needs Docker running):
+
+```bash
+npx supabase start          # prints a local URL and anon key
+npx supabase db reset       # applies all three migrations from scratch
+```
+
+Point `.env` at the printed `API_URL` and `ANON_KEY` and `npm run dev`. This is
+the right place to try schedule changes and difficulty tuning before touching
+the hosted project. `npx supabase stop` when you're done.
+
 ---
 
 ## Running your own campaign
+
+The shipped campaign runs **Monday 14 September 2026 → Sunday 6 December 2026**,
+with encounters on the Sundays that close weeks 2, 4, 6, 8, 10 and 12. Deeds
+dated before the start date are rejected by the database, so set these to your
+own dates before inviting anyone.
 
 Everything the players see comes out of two tables, so you can retune the game
 without touching the app:
