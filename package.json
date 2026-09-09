@@ -23,6 +23,7 @@
   "devDependencies": {
     "@iconify-json/game-icons": "^1.2.4",
     "@iconify-json/lucide": "^1.2.130",
+    "supabase": "^2.117.0",
     "typescript": "~5.9",
     "vue-tsc": "^3.3.11"
   },

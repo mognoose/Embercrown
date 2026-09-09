@@ -338,7 +338,7 @@ begin
         'required', v_required,
         'met', v_points >= v_required,
         'ratio', case when v_required > 0
-                      then least(v_points / v_required, 1) else 1 end
+                      then round(least(v_points / v_required, 1), 4) else 1 end
       );
     end loop;
 
@@ -384,7 +384,7 @@ begin
       'required', v_required,
       'met', v_points >= v_required,
       'ratio', case when v_required > 0
-                    then least(v_points / v_required, 1) else 1 end
+                    then round(least(v_points / v_required, 1), 4) else 1 end
     );
   end loop;
 
