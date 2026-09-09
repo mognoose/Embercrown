@@ -503,6 +503,22 @@ create policy retract_own_deed on deeds for delete
 -- Results are written by resolve_encounter() alone.
 create policy read_encounters on encounters for select using (true);
 
-grant execute on function project_encounter(text) to anon, authenticated;
+-- Granting to `authenticated` only *adds* to what a function already allows —
+-- it does not close a door. Two defaults hold it open: Postgres grants EXECUTE
+-- on every new function to PUBLIC, and Supabase's default privileges on the
+-- public schema grant it to `anon` explicitly on top of that. Both have to go.
+--
+-- resolve_encounter is the one that matters: it is SECURITY DEFINER, so it
+-- bypasses RLS by design, and what it writes is permanent. Freezing an
+-- encounter should be triggered by a member of the company looking at the
+-- result, not by anything that can reach the public API.
+revoke execute on function resolve_encounter(text) from public, anon;
+revoke execute on function hero_streak(uuid)       from public, anon;
+
 grant execute on function resolve_encounter(text) to authenticated;
 grant execute on function hero_streak(uuid)       to authenticated;
+
+-- project_encounter stays open: it is SECURITY INVOKER, so an anonymous caller
+-- reads no deeds and gets zeros back. That keeps a public progress page
+-- possible without leaking anything.
+grant execute on function project_encounter(text) to anon, authenticated;

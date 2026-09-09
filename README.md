@@ -47,6 +47,7 @@ npx supabase db push
 | `supabase/migrations/0001_schema.sql` | Tables, scoring views, encounter RPCs, row level security |
 | `supabase/migrations/0002_seed.sql` | The six abilities, six classes, ~33 activity types |
 | `supabase/migrations/0003_campaign.sql` | The Embercrown campaign: dates, six bosses, all the prose |
+| `supabase/migrations/0004_function_grants.sql` | Closes the default execute grants on the members-only functions |
 
 ### 4. Point the app at it
 
@@ -199,6 +200,13 @@ in `0001_schema.sql` are the entire authorization model:
 - A hero may insert only their own deeds (`hero_id = auth.uid()`), and may amend
   or retract one only within 24 hours of writing it.
 - `encounters` takes no client writes at all; only the RPC writes results.
+- `resolve_encounter` (SECURITY DEFINER, and what it writes is permanent) and
+  `hero_streak` are callable only by signed-in members. Note that this needs an
+  explicit `revoke ... from public, anon` — Postgres grants EXECUTE to PUBLIC on
+  every new function, and Supabase's default privileges grant it to `anon` on
+  top of that, so `grant ... to authenticated` alone closes nothing.
+  `project_encounter` stays open to anon deliberately: it is SECURITY INVOKER,
+  so an anonymous caller reads no deeds and gets zeros back.
 
 The database also enforces the rules the form suggests: 1–300 minutes, no future
 dates, nothing outside the campaign window, a per-activity daily minute cap, and
