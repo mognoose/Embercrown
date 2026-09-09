@@ -1,18 +1,29 @@
 <script setup lang="ts">
-const { hero } = useHero()
 const user = useSupabaseUser()
+const route = useRoute()
 
-const tabs = computed(() => [
-  { to: '/', label: 'Hearth', icon: 'game-icons:campfire' },
-  { to: '/map', label: 'Road', icon: 'game-icons:path-distance' },
-  { to: '/log', label: 'Log', icon: 'game-icons:quill-ink', primary: true },
-  { to: '/party', label: 'Company', icon: 'game-icons:three-friends' },
-  {
-    to: hero.value ? `/hero/${hero.value.slug}` : '/enter',
-    label: 'Hero',
-    icon: 'game-icons:visored-helm',
-  },
-])
+/**
+ * Every destination is a constant. The layout renders before its async data
+ * resolves, so a tab built from the current hero would point at its fallback on
+ * first paint — /hero forwards to the right sheet instead.
+ *
+ * `owns` says which paths light a tab up, because vue-router's own matching
+ * gets this wrong at both ends: "/" counts as active on every route, and
+ * sibling routes like /hero and /hero/[slug] don't count as active on each
+ * other. An empty list means the tab lights only on its own exact path.
+ */
+const tabs = [
+  { to: '/', label: 'Hearth', icon: 'game-icons:campfire', owns: [] },
+  { to: '/map', label: 'Road', icon: 'game-icons:path-distance', owns: ['/map'] },
+  { to: '/log', label: 'Log', icon: 'game-icons:quill-ink', owns: ['/log'], primary: true },
+  { to: '/party', label: 'Company', icon: 'game-icons:three-friends', owns: ['/party'] },
+  { to: '/hero', label: 'Hero', icon: 'game-icons:visored-helm', owns: ['/hero'] },
+]
+
+function isActive(tab: (typeof tabs)[number]) {
+  if (!tab.owns.length) return route.path === tab.to
+  return tab.owns.some(p => route.path === p || route.path.startsWith(`${p}/`))
+}
 </script>
 
 <template>
@@ -31,8 +42,9 @@ const tabs = computed(() => [
             v-for="tab in tabs"
             :key="tab.to"
             :to="tab.to"
-            class="rounded px-3 py-1.5 text-sm text-parchment-400 transition hover:bg-ash-800 hover:text-parchment-100"
-            active-class="text-ember-300"
+            class="rounded px-3 py-1.5 text-sm transition hover:bg-ash-800 hover:text-parchment-100"
+            :class="isActive(tab) ? 'text-ember-300' : 'text-parchment-400'"
+            :aria-current="isActive(tab) ? 'page' : undefined"
           >
             {{ tab.label }}
           </NuxtLink>
@@ -61,13 +73,14 @@ const tabs = computed(() => [
         <li v-for="tab in tabs" :key="tab.to" class="flex-1">
           <NuxtLink
             :to="tab.to"
-            class="flex flex-col items-center gap-0.5 py-2.5 text-parchment-500 transition"
-            active-class="text-ember-300"
+            class="flex flex-col items-center gap-0.5 py-2.5 transition"
+            :class="isActive(tab) ? 'text-ember-300' : 'text-parchment-500'"
+            :aria-current="isActive(tab) ? 'page' : undefined"
           >
             <Icon
               :name="tab.icon"
               class="text-xl"
-              :class="tab.primary ? 'text-ember-400' : ''"
+              :class="tab.primary && !isActive(tab) ? 'text-ember-400' : ''"
             />
             <span class="text-[0.625rem] tracking-wide">{{ tab.label }}</span>
           </NuxtLink>
