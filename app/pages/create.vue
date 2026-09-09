@@ -44,8 +44,20 @@ async function forge() {
   busy.value = true
   error.value = null
   try {
+    // `user.value` can be populated from the server payload while the browser's
+    // own session has lapsed — in which case the insert goes out unauthenticated
+    // and Postgres refuses it on row level security, which reads like a bug
+    // rather than "sign in again". Ask the client who it actually is, and use
+    // that id, because it is the one the database will see.
+    const { data: { user: signedIn } } = await supabase.auth.getUser()
+    if (!signedIn) {
+      throw new Error(
+        'Your session has lapsed. Enter again with your name and sigil — nothing is lost.',
+      )
+    }
+
     const { error: insertError } = await supabase.from('heroes').insert({
-      id: user.value.id,
+      id: signedIn.id,
       name: name.value.trim(),
       slug: slugify(name.value),
       class_id: classId.value,
@@ -53,11 +65,7 @@ async function forge() {
       portrait_seed: seed.value,
     })
     if (insertError) {
-      throw new Error(
-        insertError.message.includes('duplicate key')
-          ? 'That name is already carried by someone in the company.'
-          : insertError.message,
-      )
+      throw new Error(readForgeError(insertError.message))
     }
     useHasHero().value = true
     await refreshHero()
@@ -69,6 +77,21 @@ async function forge() {
   finally {
     busy.value = false
   }
+}
+
+function readForgeError(message: string): string {
+  if (message.includes('duplicate key') || message.includes('heroes_slug_key')) {
+    return 'That name is already carried by someone in the company.'
+  }
+  if (message.includes('heroes_pkey')) {
+    return 'You already have a hero. Reload and the road will be waiting.'
+  }
+  // The only way to reach this with a live session is an unauthenticated
+  // request, so say the useful thing rather than quoting Postgres.
+  if (message.includes('row-level security')) {
+    return 'The company did not recognise you. Enter again with your name and sigil, then take the oath.'
+  }
+  return message
 }
 </script>
 

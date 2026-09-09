@@ -31,7 +31,11 @@ const valid = computed(
   () => slugify(name.value).length >= 2 && /^\d{6}$/.test(sigil.value),
 )
 
-watchEffect(() => {
+// Somebody who is already signed in has no business here. This deliberately
+// runs once on mount rather than watching `user`: signing in and signing up
+// both set that ref, and a watcher would race the explicit navigation those
+// two do — sending a brand-new hero to the Hearth instead of to the oath.
+onMounted(() => {
   if (user.value) navigateTo('/')
 })
 
