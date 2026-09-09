@@ -112,7 +112,7 @@ const { campaign, acts, dragon } = useCampaign()
 
     <p>
       <NuxtLink
-        to="/enter"
+        to="/enter?summon"
         class="inline-block rounded bg-ember-600 px-5 py-3 font-display tracking-wide text-parchment-100 transition hover:bg-ember-500"
       >
         Answer the summons

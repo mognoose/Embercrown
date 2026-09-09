@@ -29,7 +29,7 @@ const heroWeakest = computed(() => {
       </p>
       <div class="mt-5 flex flex-wrap gap-2">
         <NuxtLink
-          to="/enter"
+          to="/enter?summon"
           class="rounded bg-ember-600 px-5 py-3 font-display tracking-wide text-parchment-100 transition hover:bg-ember-500"
         >
           Answer the summons

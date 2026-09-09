@@ -52,7 +52,7 @@ function isActive(tab: (typeof tabs)[number]) {
 
         <NuxtLink
           v-if="!user"
-          to="/enter"
+          to="/enter?summon"
           class="ml-auto rounded border border-ember-600/60 px-3 py-1.5 text-sm text-ember-300 md:ml-0"
         >
           Answer the summons

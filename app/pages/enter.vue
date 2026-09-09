@@ -1,11 +1,35 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'scroll' })
-useHead({ title: 'Answer the summons · Embercrown' })
 
 const { enter, summon } = useSigil()
 const user = useSupabaseUser()
+const route = useRoute()
+const router = useRouter()
 
-const mode = ref<'enter' | 'summon'>('enter')
+/**
+ * Which half of this page you get depends on why you arrived.
+ *
+ * `?summon` means you followed an "Answer the summons" link and are new, so the
+ * page opens on sign-up. A bare /enter means the app sent you here because your
+ * session lapsed, and you want to sign in. Getting this backwards greeted every
+ * new hero with a form titled "Return to the road".
+ */
+const mode = ref<'enter' | 'summon'>(
+  route.query.summon !== undefined ? 'summon' : 'enter',
+)
+
+// Keep the URL honest, so a refresh or a shared link lands on the same form.
+function setMode(next: 'enter' | 'summon') {
+  mode.value = next
+  error.value = null
+  router.replace({ query: next === 'summon' ? { summon: '' } : {} })
+}
+
+useHead({
+  title: () => mode.value === 'summon'
+    ? 'Answer the summons · Embercrown'
+    : 'Return to the road · Embercrown',
+})
 const name = ref('')
 const sigil = ref('')
 const busy = ref(false)
@@ -131,13 +155,21 @@ async function submit() {
     <p class="mt-6 text-sm text-parchment-500">
       <template v-if="mode === 'summon'">
         Already sworn in?
-        <button class="text-ember-300 underline-offset-2 hover:underline" @click="mode = 'enter'">
+        <button
+          type="button"
+          class="text-ember-300 underline-offset-2 hover:underline"
+          @click="setMode('enter')"
+        >
           Enter with your sigil
         </button>
       </template>
       <template v-else>
         Not yet in the company?
-        <button class="text-ember-300 underline-offset-2 hover:underline" @click="mode = 'summon'">
+        <button
+          type="button"
+          class="text-ember-300 underline-offset-2 hover:underline"
+          @click="setMode('summon')"
+        >
           Answer the summons
         </button>
       </template>
