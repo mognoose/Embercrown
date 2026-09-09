@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Embercrown — a dark fantasy theme.
+
+   Ground is ash and charred wood; type is candlelight on it. The ember accent
+   is the Eternal Flame and is reserved for the things that matter: the primary
+   action, the countdown, the dragon.
+   Each ability owns exactly one colour, used by every bar, pip and icon that
+   refers to it — see --color-str .. --color-cha.
+--------------------------------------------------------------------------- */
+
+@theme {
+  /* Ash — the page and its surfaces, darkest first. */
+  --color-ash-950: #0d0b0a;
+  --color-ash-900: #141110;
+  --color-ash-850: #1a1615;
+  --color-ash-800: #221d1a;
+  --color-ash-700: #322a26;
+  --color-ash-600: #4a3f38;
+  --color-ash-500: #6b5c51;
+
+  /* Parchment — text, from muted to bright. */
+  --color-parchment-500: #8a7d70;
+  --color-parchment-400: #a89a8a;
+  --color-parchment-300: #c4b6a3;
+  --color-parchment-200: #ded2c0;
+  --color-parchment-100: #f2e9d8;
+
+  /* Ember — the Flame. Accent, sparingly. */
+  --color-ember-600: #a83a12;
+  --color-ember-500: #d4541c;
+  --color-ember-400: #ef7327;
+  --color-ember-300: #f89b4a;
+  --color-ember-200: #fbc27e;
+
+  /* Gold — victory, boons, ornament. */
+  --color-gold-500: #b08a3c;
+  --color-gold-400: #d4af5a;
+  --color-gold-300: #e8cd85;
+
+  /* Blood — defeat, danger, the wyrm. */
+  --color-blood-600: #7a1f24;
+  --color-blood-500: #a32b32;
+  --color-blood-400: #c9484f;
+
+  /* The six abilities. One colour each, everywhere. */
+  --color-str: #c9524a;
+  --color-dex: #6faa5e;
+  --color-con: #cf8b3a;
+  --color-int: #5b8fd4;
+  --color-wis: #8b6fc4;
+  --color-cha: #cf6fa8;
+
+  --font-display: 'Cinzel', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'Alegreya Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-chronicle: 'Alegreya', Georgia, serif;
+
+  --radius-panel: 0.25rem;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-ash-950);
+    color: var(--color-parchment-300);
+    font-family: var(--font-body);
+    /* A faint ember glow at the top, as if from a fire just off-screen. */
+    background-image:
+      radial-gradient(70rem 40rem at 50% -18rem, rgba(212, 84, 28, 0.13), transparent 70%),
+      radial-gradient(50rem 30rem at 90% 100%, rgba(91, 143, 212, 0.05), transparent 70%);
+    background-attachment: fixed;
+    min-height: 100dvh;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    color: var(--color-parchment-100);
+    letter-spacing: 0.01em;
+  }
+
+  ::selection {
+    background: var(--color-ember-600);
+    color: var(--color-parchment-100);
+  }
+
+  /* Keep focus visible against the dark ground without the default blue. */
+  :focus-visible {
+    outline: 2px solid var(--color-ember-400);
+    outline-offset: 2px;
+  }
+}
+
+@utility panel {
+  background-color: --alpha(var(--color-ash-850) / 80%);
+  border: 1px solid var(--color-ash-700);
+  border-radius: var(--radius-panel);
+}
+
+/* Small-caps label used for section headings and stat names. */
+@utility rune {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-parchment-500);
+}
